@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap");
+
+* {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: bold;
+}
+
+header {
+  display: flex;
+  box-sizing: border-box;
+  margin: -10px -8px auto -10px;
+  background: rgb(29, 29, 29);
+  color: white;
+  height: fit-content;
+  font-size: 1.5vw;
+}
+
+header, #pack-line {
+  font-size: 14pt;
+}
+
+header p {
+  padding-left: 20px;
+  align-self: center;
+}
+
+#pack-line:invalid {
+  color: rgb(185, 47, 47);
+  border-color:rgb(175, 12, 12);
+  box-shadow: -0.1vw 0.3vw rgba(175, 12, 12, 0.3);
+}
+
+#pack-line:focus {
+  outline: none;
+}
+
+#pack-line {
+  margin: auto 10px auto 10px;
+  color: rgba(0,72,167,1);
+  border-radius: 20px;
+  border: 3px solid rgba(0,72,167);
+  text-align: center;
+  align-self: center;
+  height: fit-content;
+  box-shadow: -0.1vw 0.3vw rgba(0, 72, 167, 0.3);
+}
+
+.table-page {
+  background: rgba(0,72,167,1);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  margin-top: 15px;
+}
+
+table {
+  border-collapse: collapse;
+  box-shadow: -1.2vw 1.2vw rgba(0, 0, 0, 0.3);
+}
+
+th {
+  padding: 10px;
+}
+
+table {
+  background-color: white;
+}
+
+table tr:nth-child(even) {
+  background-color: white;
+}
+
+table tr:nth-child(odd) {
+  background-color: rgb(228, 228, 228);
+}
+
+table,
+th,
+tr,
+td {
+  font-size: 15pt;
+  box-sizing: border-box;
+  border: 2px solid rgb(92, 92, 92);
+  text-align: center;
+  height: 1.5vw;
+}
+
+#cop {
+  color: rgb(255, 255, 255, 0.7);
+  text-align: center;
+  transform: translateY(5px);
+}
+
+@media only screen and (orientation: portrait) {
+  td, th {
+    padding: 2px;
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 560px) {
+  .container {
+    overflow-x: auto;
+    justify-content: start;
+  }
+}
