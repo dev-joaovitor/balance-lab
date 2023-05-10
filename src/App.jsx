@@ -9,13 +9,9 @@ export default function App() {
     <>
       <header>
         <p>Coleta de Dados — Balança</p>
-        
-            <ul>
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/table">Table</Link></li>
-            </ul>
       </header>
       <Outlet />
+      <p id="cop"> © 2023, joaotorvitor. All rights reserved.</p>
     </>
   )
 }

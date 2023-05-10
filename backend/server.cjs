@@ -15,7 +15,6 @@ const server = new ws.Server({ port: 666 });
 
 server.on("connection", (stream) => {
   console.log("connected");
-  console.log(msg.payload);
 
   const balanceMock = setInterval(() => {
       stream.send(getRandomFloat(60, 350, 2));
@@ -28,7 +27,7 @@ server.on("connection", (stream) => {
 
     message = JSON.parse(message);
 
-    if (message.weights) {
+    if (message.weights) { //handle weights
       msg.payload.p1 = message.weights.slice(0,20);
       msg.payload.p2 = message.weights.slice(20,26);
       msg.payload.p3 = message.weights.slice(26,46);

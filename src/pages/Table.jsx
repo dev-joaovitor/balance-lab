@@ -3,7 +3,8 @@ import React, { useInsertionEffect, useState } from "react"
 import { Link } from "react-router-dom";
 import "./Table.css";
 
-const ws = new WebSocket("ws://localhost:666/");
+// const ws = new WebSocket("ws://localhost:666/");
+const ws = new WebSocket("ws://100.100.228.239:666/");
 
 export default function Table() {
   //change the body class to individual page styles
@@ -119,7 +120,6 @@ export default function Table() {
   <div className="send-btn-container">
   <button onClick={sendWeights} className="send-btn" disabled={notReady}>{buttonText}</button>
   </div>
-  <p id="cop"> © 2023, joaotorvitor. All rights reserved.</p>
     </>
   )
 }

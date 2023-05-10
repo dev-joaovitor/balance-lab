@@ -1,3 +1,74 @@
 .home-page {
-    background-color: #F5F5F5;
+  background-color: rgb(61, 96, 142);
+}
+
+.home-form-container p {
+  color: rgb(243, 243, 243);
+  background-color: rgb(69, 101, 165);
+  padding: 10px;
+  margin: 12px auto;
+  text-align: center;
+  border: 4px solid rgba(32, 32, 32, 0.3);
+  border-radius: 20px;
+}
+
+.home-form {
+  margin: 15px auto;
+  width: fit-content;
+  padding: 0 30px 15px 30px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(53, 67, 98);
+  color: white;
+  border-radius: 20px;
+  border: 6px solid rgba(32, 32, 32, 0.3);;
+}
+
+.home-inputs:focus {
+  border: 2px solid #5c91fc !important;
+  transform: scale(110%) rotateZ(1deg);
+}
+
+.home-inputs:invalid {
+  border: 2px solid rgb(220, 55, 55);
+}
+
+.home-labels, .home-inputs {
+  display: block;
+}
+
+.home-labels, .home-inputs, .home-selects {
+  margin: auto;
+  margin-bottom: 15px;
+  font-size: 13pt;
+}
+
+.home-selects {
+  text-align: center;
+  width: 70%;
+  height: 25px;
+  font-size: 11pt;
+}
+
+.save-home-form-btn {
+  border: 3px solid;
+  padding: 6px;
+  margin: 10px auto;
+  appearance: none;
+  cursor: pointer;
+  font-size: 13pt;
+  text-align: center;
+  border-radius: 10px;
+  background-color: rgb(45, 45, 45);
+  color: rgb(231, 231, 231);
+}
+
+.save-home-form-btn:disabled {
+  display: none;
+}
+
+@media only screen and (max-width: 320px) {
+  .home-form-container {
+    overflow-x: auto;
   }
+}
