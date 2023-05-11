@@ -27,6 +27,8 @@ server.on("connection", (stream) => {
 
     message = JSON.parse(message);
 
+    console.log(message);
+
     if (message.weights) { //handle weights
       msg.payload.p1 = message.weights.slice(0,20);
       msg.payload.p2 = message.weights.slice(20,26);
@@ -34,8 +36,12 @@ server.on("connection", (stream) => {
       msg.payload.p4 = message.weights.slice(46,52);
     }
 
-    if (message.test) {
-      msg.payload.test = message.test;
+    if (message.userData) { //handle userdata
+      msg.payload.userId = message.userData.userId;
+      msg.payload.batchNo = message.userData.batchNo;
+      msg.payload.density = message.userData.density;
+      msg.payload.packLine = message.userData.packLine;
+      msg.payload.volume = message.userData.volume;
     }
 
     console.log(msg.payload);

@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
-import React, { useInsertionEffect, useState } from "react"
+import React, { useEffect, useInsertionEffect, useState } from "react"
 import { Link } from "react-router-dom";
 import "./Table.css";
 
-// const ws = new WebSocket("ws://localhost:666/");
-const ws = new WebSocket("ws://100.100.228.239:666/");
+const ws = new WebSocket("ws://localhost:666/");
+// const ws = new WebSocket("ws://100.100.228.239:666/");
 
-export default function Table() {
+export default function Table({userData}) {
   //change the body class to individual page styles
   useInsertionEffect(() => {
     console.clear();
@@ -84,7 +84,9 @@ export default function Table() {
 
     if (notReady) return alert("Não foi possível enviar, verifique os campos!");
 
-    ws.send(JSON.stringify({weights}));
+    ws.send(JSON.stringify({weights, userData}));
+
+    setNotReady(true);
   }
 
   ws.onmessage = (msg) => addWeight(msg.data); //receiving data from backend
