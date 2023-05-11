@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useInsertionEffect, useState, useContext, createContext } from "react"
 import { useNavigate } from "react-router-dom";
@@ -55,7 +56,6 @@ export default function Home({setUserData}) {
       }
 
       const saveForm = () => { //saves the data and redirect to table page
-        console.log(userId.length);
         if (userId.length != 8) return alert("O ID deve conter 8 dígitos");
 
         setUserData({
@@ -63,9 +63,9 @@ export default function Home({setUserData}) {
           batchNo,
           density,
           packLine,
-          volume: (volume === "1L (Gran BOH e Bud)" ? '990.00' :
-                   volume === "1L" ? '1000.00' :
-                   volume === "1.1L" ? '1100.00' : parseFloat(volume).toFixed(2)),
+          volume: (volume === "1L (Gran BOH e Bud)" ? 990 :
+                   volume === "1L" ? 1000 :
+                   volume === "1.1L" ? 1100 : parseFloat(volume)),
         });
         return navigate("/table");
       }
@@ -112,19 +112,19 @@ export default function Home({setUserData}) {
               </label>
         
               <label htmlFor="density" className="home-labels">
-                Densidade *
+                Densidade da Água*
                 <input
                 onChange={(e) => {
                   const val = e.currentTarget.value;
 
                   if (isNaN(val)) return alert("Apenas números!"), e.currentTarget.value = '';
 
-                  setDensity(parseInt(val));
+                  setDensity(parseFloat(val));
                 }}
                 className="home-inputs"
                 name="density"
                 id="density"
-                placeholder="Digite a densidade do item"
+                placeholder="Digite a densidade utilizada"
                 required/>
               </label>
 
