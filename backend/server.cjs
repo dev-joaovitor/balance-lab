@@ -37,7 +37,7 @@ const toleranciaObj = {
   1100: 16.5,
 }
 
-const server = new ws.Server({ port: 666 });
+const server = new ws.Server({ port: 6969 });
 
 server.on("connection", (stream) => {
   console.log("connected");
@@ -74,8 +74,8 @@ server.on("connection", (stream) => {
     console.log(msg.payload);
   })
 
+  stream.on("open", () => console.log("opened"));
   stream.on("close", () => console.log("closed"));
-
 })
 
 

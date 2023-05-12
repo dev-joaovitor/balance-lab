@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useInsertionEffect, useState } from "react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Table.css";
 
-const ws = new WebSocket("ws://localhost:666/");
 // const ws = new WebSocket("ws://100.100.228.239:666/");
 
-export default function Table({userData}) {
+export default function Table({userData, ws}) {
   //change the body class to individual page styles
   useInsertionEffect(() => {
     console.clear();
@@ -30,6 +29,7 @@ export default function Table({userData}) {
     });
   }
 
+  const navigate = useNavigate();
 
   const [weights, setWeights]        = useState([]), //weight storage
         [rows, setRows]              = useState(tableInit), //table storage
@@ -81,14 +81,16 @@ export default function Table({userData}) {
   }
 
   const sendWeights = () => {
-    setbuttonText("Enviado!");
-
     if (notReady) return alert("Não foi possível enviar, verifique os campos!");
+
+    setbuttonText("Enviado!");
 
     ws.send(JSON.stringify({weights, userData}));
 
     setNotReady(true);
   }
+
+  const backHome = () => navigate("/")
 
   ws.onmessage = (msg) => addWeight(msg.data); //receiving data from backend
 
@@ -122,6 +124,7 @@ export default function Table({userData}) {
   </div>
   <div className="send-btn-container">
   <button onClick={sendWeights} className="send-btn" disabled={notReady}>{buttonText}</button>
+  <button onClick={backHome} className="back-btn">Voltar ao início</button>
   </div>
     </>
   )

@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home';
 import Table from './pages/Table';
 import { Link } from 'react-router-dom';
+
+const ws = new WebSocket("ws://localhost:6969/");
 
 export default function App() {
   
@@ -17,11 +19,11 @@ export default function App() {
       <Routes>
         <Route
           path='/'
-          element={<Home userData={userData} setUserData={setUserData}/>}
+          element={<Home ws={ws} userData={userData} setUserData={setUserData}/>}
         />
         <Route
           path='table'
-          element={<Table userData={userData}/>}
+          element={<Table ws={ws} userData={userData}/>}
         />
       </Routes>
 

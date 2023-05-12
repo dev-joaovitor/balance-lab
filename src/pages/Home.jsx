@@ -15,7 +15,7 @@ const volumes = [
   "1L", "1.1L", "1L (Gran BOH e Bud)"
 ];
 
-export default function Home({setUserData}) {
+export default function Home({setUserData, ws}) {
     //change the body class to individual page styles
     useInsertionEffect(() => {
         console.clear();
@@ -33,11 +33,11 @@ export default function Home({setUserData}) {
       const navigate = useNavigate();
       
       const [notReady, setNotReady] = useState(true), //send button status
-            [userId, setUserId]     = useState(''), //stores userid
-            [batchNo, setBatchNo]   = useState(''), //stores batchno
-            [density, setDensity]   = useState(''), //stores density
-            [packLine, setPackLine] = useState(''), //stores packaging line
-            [volume, setVolume]     = useState(''); //stores volume
+            [userId, setUserId]     = useState(), //stores userid
+            [batchNo, setBatchNo]   = useState(), //stores batchno
+            [density, setDensity]   = useState(), //stores density
+            [packLine, setPackLine] = useState(), //stores packaging line
+            [volume, setVolume]     = useState(); //stores volum
 
       const fields = [
         userId,
@@ -45,12 +45,14 @@ export default function Home({setUserData}) {
         density,
         packLine,
         volume
-      ]
+      ];
 
       const checkFields = () => { //checks if all the fields are valid so the user can submit
-        if (fields.includes('')) {
-          return setNotReady(true);
-        }
+        if (ws.readyState != 1) return alert("Conexão não estabelecida =( reinicie a aplicação!");
+
+        const invalid = ['', undefined, NaN];
+
+        if (invalid.some(e => fields.includes(e))) return setNotReady(true);
 
         return setNotReady(false);
       }
