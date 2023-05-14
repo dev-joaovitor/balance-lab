@@ -44,7 +44,7 @@ server.on("connection", (stream) => {
 
   const balanceMock = setInterval(() => {
       stream.send(getRandomFloat(60, 350, 2));
-  }, 100);
+  }, 300);
 
   stream.on("message", (message) => {
     message = message.toString();
@@ -55,12 +55,12 @@ server.on("connection", (stream) => {
 
     console.log(message);
 
-    if (message.weights) { //handle weights
-      message.weights.slice(0,20) .map((v, i) => msg.payload[`p1_${i+1}`] = parseFloat(v)) //p1
-      message.weights.slice(20,26).map((v, i) => msg.payload[`p2_${i+1}`] = parseFloat(v)) //p2
-      message.weights.slice(26,46).map((v, i) => msg.payload[`p3_${i+1}`] = parseFloat(v)) //p3
-      message.weights.slice(46,52).map((v, i) => msg.payload[`p4_${i+1}`] = parseFloat(v)) //p4
-    }
+    // if (message.weights) { //handle weights
+    //   message.weights.slice(0,20) .map((v, i) => msg.payload[`p1_${i+1}`] = v) //p1
+    //   message.weights.slice(20,26).map((v, i) => msg.payload[`p2_${i+1}`] = v) //p2
+    //   message.weights.slice(26,46).map((v, i) => msg.payload[`p3_${i+1}`] = v) //p3
+    //   message.weights.slice(46,52).map((v, i) => msg.payload[`p4_${i+1}`] = v) //p4
+    // }
 
     if (message.userData) { //handle userdata
       msg.payload.idUsuario = message.userData.userId;
@@ -77,14 +77,3 @@ server.on("connection", (stream) => {
   stream.on("open", () => console.log("opened"));
   stream.on("close", () => console.log("closed"));
 })
-
-
-
-// function getRandomFloat(min, max, decimals) {
-//   const str = (Math.random() * (max - min) + min).toFixed(decimals);
-
-//   return parseFloat(str);
-// }
-// const balanceMock = setInterval(() => {
-//     stream.send(getRandomFloat(60, 350, 2));
-// }, 50);

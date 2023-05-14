@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home';
 import Table from './pages/Table';
-import { Link } from 'react-router-dom';
 
 const ws = new WebSocket("ws://localhost:6969/");
 
