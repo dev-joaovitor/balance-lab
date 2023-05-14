@@ -4,8 +4,6 @@ import React, { useEffect, useInsertionEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import "./Table.css";
 
-// const ws = new WebSocket("ws://100.100.228.239:666/");
-
 export default function Table({userData, ws}) {
   //change the body class to individual page styles
   useInsertionEffect(() => {
@@ -45,11 +43,10 @@ export default function Table({userData, ws}) {
   const addWeight = (weight) => {
     weight = parseFloat(weight);
 
-    //if the table is finished, don"t accept more values
-    if (notReady === false && current.Column === 5) return (ws.send("stop"), 
-    alert("Tabela já finalizada, envie os dados!"));
+    //if table is finished, don"t accept more values
+    if (current.Completed.length === 4) return alert("Tabela já finalizada, envie os dados!");
 
-    //add weight to table
+    //add weight to table only if there's not a data
     if (rows[current.Row][`weight${current.Column}`] !== "") {
       if (current.Completed.includes(current.Column)) {
         current.Column++;
@@ -58,7 +55,6 @@ export default function Table({userData, ws}) {
       current.Row = weights[`p${current.Column}`].length + 1;
       setCurrent(current);
     }
-
     rows[current.Row][`weight${current.Column}`] = weight;
     
     //store the weights in the array
@@ -81,25 +77,25 @@ export default function Table({userData, ws}) {
       current.Row = 20;
       setCurrent(current);
     }
-  
 
     //row 20 means the end of a column
     if (current.Row === 20) {
       current.Completed.push(current.Column);
       current.Row = 1;
       current.Column++;
+      setCurrent(current);
       
-      if (current.Column === 5) return setNotReady(false);
+      if (current.Completed.length === 4) return setNotReady(false);
 
-      return setCurrent(current);
+      return;
     }
 
     //new row
     current.Row++;
-  
     return setCurrent(current);
   }
 
+  //send the data collected to the backend
   const sendData = () => {
     if (notReady) return alert("Não foi possível enviar, verifique os campos!");
 
@@ -110,9 +106,10 @@ export default function Table({userData, ws}) {
     setNotReady(true);
   }
 
-  const backHome = () => navigate("/")
+  //back to the homepage forms
+  const backHome = () => navigate("/");
 
-  
+  //delete a selected column
   const clearColumn = (col) => {
     weights[`p${col}`] = [];
     setWeights(weights);
@@ -128,7 +125,7 @@ export default function Table({userData, ws}) {
     return setNotReady(true);
   }
   
-  ws.onmessage = (msg) => addWeight(msg.data); //receiving data from backend
+  ws.onmessage = (msg) => addWeight(msg.data);
 
   return (
     <>

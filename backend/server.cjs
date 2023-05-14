@@ -44,7 +44,7 @@ server.on("connection", (stream) => {
 
   const balanceMock = setInterval(() => {
       stream.send(getRandomFloat(60, 350, 2));
-  }, 300);
+  }, 1200);
 
   stream.on("message", (message) => {
     message = message.toString();
