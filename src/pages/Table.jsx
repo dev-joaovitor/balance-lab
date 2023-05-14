@@ -125,7 +125,10 @@ export default function Table({userData, ws}) {
     return setNotReady(true);
   }
   
-  ws.onmessage = (msg) => addWeight(msg.data);
+  ws.onmessage = (msg) => {
+    if (current.Completed.length === 4) return;
+    addWeight(msg.data)
+  };
 
   return (
     <>

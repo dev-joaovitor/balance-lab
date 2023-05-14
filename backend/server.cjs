@@ -44,7 +44,7 @@ server.on("connection", (stream) => {
 
   const balanceMock = setInterval(() => {
       stream.send(getRandomFloat(60, 350, 2));
-  }, 1200);
+  }, 200);
 
   stream.on("message", (message) => {
     message = message.toString();
@@ -53,14 +53,14 @@ server.on("connection", (stream) => {
 
     message = JSON.parse(message);
 
-    console.log(message);
+    // console.log(message);
 
-    // if (message.weights) { //handle weights
-    //   message.weights.slice(0,20) .map((v, i) => msg.payload[`p1_${i+1}`] = v) //p1
-    //   message.weights.slice(20,26).map((v, i) => msg.payload[`p2_${i+1}`] = v) //p2
-    //   message.weights.slice(26,46).map((v, i) => msg.payload[`p3_${i+1}`] = v) //p3
-    //   message.weights.slice(46,52).map((v, i) => msg.payload[`p4_${i+1}`] = v) //p4
-    // }
+    if (message.weights) {
+      message.weights.p1.map((v, i) => msg.payload[`p1_${i+1}`] = v);
+      message.weights.p2.map((v, i) => msg.payload[`p2_${i+1}`] = v);
+      message.weights.p3.map((v, i) => msg.payload[`p3_${i+1}`] = v);
+      message.weights.p4.map((v, i) => msg.payload[`p4_${i+1}`] = v);
+    }
 
     if (message.userData) { //handle userdata
       msg.payload.idUsuario = message.userData.userId;
