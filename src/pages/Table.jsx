@@ -1,10 +1,26 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useInsertionEffect, useState } from "react"
+import React, { useContext, useEffect, useInsertionEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import "./Table.css";
+import { AppContext } from "../App";
 
-export default function Table({userData, ws}) {
+export default function Table() {
+  const {
+    userData,
+    weights,
+    setWeights,
+    rows,
+    setRows,
+    current,
+    setCurrent,
+    notReady,
+    setNotReady,
+    buttonText,
+    setButtonText,
+    ws
+  } = useContext(AppContext);
+
   //change the body class to individual page styles
   useInsertionEffect(() => {
     console.clear();
@@ -14,31 +30,8 @@ export default function Table({userData, ws}) {
       document.body.classList.remove("table-page");
     };
   }, []);
-  
-  //table initializer, enum the beak column
-  const tableInit = [""];
-  for (let i = 1; i <= 20; i++) {
-    tableInit.push({
-      "title": i,
-      "weight1": "",
-      "weight2": "",
-      "weight3": "",
-      "weight4": "",
-    });
-  }
-
-  tableInit.push({
-    "title": "MÉDIA"
-  })
 
   const navigate = useNavigate();
-
-  const [weights, setWeights]        = useState({p1: [], p2: [], p3: [], p4: []}), //weight storage
-        [rows, setRows]              = useState(tableInit), //table storage
-        [current, setCurrent]        = useState({Row: 1, Column: 1, Completed: []}), //table coord storage
-        [notReady, setNotReady]      = useState(true), //button status
-        [buttonText, setbuttonText]  = useState("Enviar ao MES"); //button status
-
 
   const addWeight = (weight) => {
     weight = parseFloat(weight);
@@ -99,7 +92,7 @@ export default function Table({userData, ws}) {
   const sendData = () => {
     if (notReady) return alert("Não foi possível enviar, verifique os campos!");
 
-    setbuttonText("Enviado!");
+    setButtonText("Enviado!");
 
     ws.send(JSON.stringify({weights, userData}));
 

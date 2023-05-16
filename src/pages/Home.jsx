@@ -3,6 +3,7 @@
 import React, { useEffect, useInsertionEffect, useState, useContext, createContext } from "react"
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
+import { AppContext } from "../App";
 
 
 const lines = [502, 503, 511, 512, 541];
@@ -15,9 +16,11 @@ const volumes = [
   "1L", "1.1L", "1L (Gran BOH e Bud)"
 ];
 
-export default function Home({setUserData, ws}) {
-    //change the body class to individual page styles
-    useInsertionEffect(() => {
+export default function Home() {
+  const { setUserData, ws } = useContext(AppContext);
+  
+  //change the body class to individual page styles
+  useInsertionEffect(() => {
         console.clear();
         document.body.classList.add("home-page");
         
@@ -26,156 +29,156 @@ export default function Home({setUserData, ws}) {
         };
       }, []);
       
-      useEffect(() => {
-        checkFields();
-      })
-
-      const navigate = useNavigate();
+  useEffect(() => {
+    checkFields();
+  })
       
-      const [notReady, setNotReady] = useState(true), //send button status
-            [userId, setUserId]     = useState(), //stores userid
-            [batchNo, setBatchNo]   = useState(), //stores batchno
-            [density, setDensity]   = useState(), //stores density
-            [packLine, setPackLine] = useState(), //stores packaging line
-            [volume, setVolume]     = useState(); //stores volum
+  const navigate = useNavigate();
+      
+  const [notReady, setNotReady] = useState(true), //send button status
+        [userId, setUserId]     = useState(), //stores userid
+        [batchNo, setBatchNo]   = useState(), //stores batchno
+        [density, setDensity]   = useState(), //stores density
+        [packLine, setPackLine] = useState(), //stores packaging line
+        [volume, setVolume]     = useState(); //stores volum
 
-      const fields = [
-        userId,
-        batchNo,
-        density,
-        packLine,
-        volume
-      ];
+  const fields = [
+    userId,
+    batchNo,
+    density,
+    packLine,
+    volume
+  ];
 
-      const checkFields = () => { //checks if all the fields are valid so the user can submit
-        if (ws.readyState != 1) return alert("Conexão não estabelecida =( reinicie a aplicação!");
+  const checkFields = () => { //checks if all the fields are valid so the user can submit
+    if (ws.readyState != 1) return alert("Conexão não estabelecida =( reinicie a aplicação!");
 
-        const invalid = ['', undefined, NaN];
+    const invalid = ['', undefined, NaN];
 
-        if (invalid.some(e => fields.includes(e))) return setNotReady(true);
+    if (invalid.some(e => fields.includes(e))) return setNotReady(true);
 
-        return setNotReady(false);
-      }
+    return setNotReady(false);
+  }
 
-      const saveForm = () => { //saves the data and redirect to table page
-        if (userId.length != 8) return alert("O ID deve conter 8 dígitos");
+  const saveForm = () => { //saves the data and redirect to table page
+    if (userId.length != 8) return alert("O ID deve conter 8 dígitos");
 
-        setUserData({
-          userId: parseFloat(userId),
-          batchNo,
-          density,
-          packLine,
-          volume: (volume === "1L (Gran BOH e Bud)" ? 990 :
-                   volume === "1L" ? 1000 :
-                   volume === "1.1L" ? 1100 : parseFloat(volume)),
-        });
-        return navigate("/table");
-      }
+    setUserData({
+      userId: parseFloat(userId),
+      batchNo,
+      density,
+      packLine,
+      volume: (volume === "1L (Gran BOH e Bud)" ? 990 :
+               volume === "1L" ? 1000 :
+               volume === "1.1L" ? 1100 : parseFloat(volume)),
+    });
+    return navigate("/table");
+  }
 
-      return (
-        <>
-          <div className="home-form-container">
-          <form className="home-form">
-          <p>Dados obrigatórios<br/>para a coleta!</p>
-              <label htmlFor="user-id" className="home-labels">
-                Usuário *
-                <input
-                onChange={(e) => {
-                  const val = e.currentTarget.value;
+  return (
+    <>
+      <div className="home-form-container">
+      <form className="home-form">
+      <p>Dados obrigatórios<br/>para a coleta!</p>
+          <label htmlFor="user-id" className="home-labels">
+            Usuário *
+            <input
+            onChange={(e) => {
+              const val = e.currentTarget.value;
 
-                  if (isNaN(val)) return alert("Apenas números!"), e.currentTarget.value = '';
+              if (isNaN(val)) return alert("Apenas números!"), e.currentTarget.value = '';
 
-                  if (val.length > 8) return e.currentTarget.value = val.slice(0,8);
+              if (val.length > 8) return e.currentTarget.value = val.slice(0,8);
 
-                  setUserId(val);
-                }}
-                className="home-inputs"
-                name="user-id" 
-                id="user-id"
-                placeholder="Digite seu ID"
-                required/>
-              </label>
-              
-              <label htmlFor="batch-no" className="home-labels">
-                Nº do Lote *
-                <input
-                onChange={(e) => {
-                  const val = e.currentTarget.value;
+              setUserId(val);
+            }}
+            className="home-inputs"
+            name="user-id" 
+            id="user-id"
+            placeholder="Digite seu ID"
+            required/>
+          </label>
+          
+          <label htmlFor="batch-no" className="home-labels">
+            Nº do Lote *
+            <input
+            onChange={(e) => {
+              const val = e.currentTarget.value;
 
-                  if (isNaN(val)) return alert("Apenas números!"), e.currentTarget.value = '';
+              if (isNaN(val)) return alert("Apenas números!"), e.currentTarget.value = '';
 
-                  setBatchNo(parseInt(val));
-                }}
-                className="home-inputs"
-                name="batch-no"
-                id="batch-no"
-                placeholder="Digite o número do lote"
-                required/>
-              </label>
-        
-              <label htmlFor="density" className="home-labels">
-                Densidade da Água*
-                <input
-                onChange={(e) => {
-                  const val = e.currentTarget.value;
+              setBatchNo(parseInt(val));
+            }}
+            className="home-inputs"
+            name="batch-no"
+            id="batch-no"
+            placeholder="Digite o número do lote"
+            required/>
+          </label>
+    
+          <label htmlFor="density" className="home-labels">
+            Densidade da Água*
+            <input
+            onChange={(e) => {
+              const val = e.currentTarget.value;
 
-                  if (isNaN(val)) return alert("Apenas números!"), e.currentTarget.value = '';
+              if (isNaN(val)) return alert("Apenas números!"), e.currentTarget.value = '';
 
-                  setDensity(parseFloat(val));
-                }}
-                className="home-inputs"
-                name="density"
-                id="density"
-                placeholder="Digite a densidade utilizada"
-                required/>
-              </label>
+              setDensity(parseFloat(val));
+            }}
+            className="home-inputs"
+            name="density"
+            id="density"
+            placeholder="Digite a densidade utilizada"
+            required/>
+          </label>
 
-              <select
-              className="home-selects"
-              onChange={(e) => {
-                setPackLine(parseInt(e.currentTarget.value));
-              }}
-              id="pack-line"
-              defaultValue=""
-              required>
-              
-              <option
-                value=""
-                disabled
-                hidden>
-                Selecione a linha
-              </option>
+          <select
+          className="home-selects"
+          onChange={(e) => {
+            setPackLine(parseInt(e.currentTarget.value));
+          }}
+          id="pack-line"
+          defaultValue=""
+          required>
+          
+          <option
+            value=""
+            disabled
+            hidden>
+            Selecione a linha
+          </option>
 
-              {lines.map((line, idx) => (
-                <option key={idx} value={line}>{line}</option>
-                ))}
+          {lines.map((line, idx) => (
+            <option key={idx} value={line}>{line}</option>
+            ))}
 
-              </select>
+          </select>
 
-              <select
-              className="home-selects"
-              onChange={(e) => {
-                setVolume(e.currentTarget.value);
-              }}
-              id="volume"
-              defaultValue=""
-              required>
-              
-              <option
-                value=""
-                disabled
-                hidden>
-                Selecione o volume
-              </option>
+          <select
+          className="home-selects"
+          onChange={(e) => {
+            setVolume(e.currentTarget.value);
+          }}
+          id="volume"
+          defaultValue=""
+          required>
+          
+          <option
+            value=""
+            disabled
+            hidden>
+            Selecione o volume
+          </option>
 
-              {volumes.map((volume, idx) => (
-                <option key={idx} value={volume}>{volume}</option>
-                ))}
+          {volumes.map((volume, idx) => (
+            <option key={idx} value={volume}>{volume}</option>
+            ))}
 
-              </select>
-              <button type="button" className="save-home-form-btn" onClick={saveForm} disabled={notReady}>Salvar Dados</button>
-          </form>
-          </div>
-        </>
-      )
+          </select>
+          <button type="button" className="save-home-form-btn" onClick={saveForm} disabled={notReady}>Salvar Dados</button>
+      </form>
+      </div>
+    </>
+  )
 }
