@@ -4,6 +4,7 @@ import React, { useEffect, useInsertionEffect, useState, useContext, createConte
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import { AppContext } from "../App";
+import { HomeContext } from "../contexts/HomeContext";
 
 
 const lines = [502, 503, 511, 512, 541];
@@ -18,6 +19,20 @@ const volumes = [
 
 export default function Home() {
   const { setUserData, ws } = useContext(AppContext);
+  const {
+    notReady,
+    setNotReady,
+    userId,
+    setUserId,
+    batchNo,
+    setBatchNo,
+    density,
+    setDensity,
+    packLine,
+    setPackLine,
+    volume,
+    setVolume,
+  } = useContext(HomeContext);
   
   //change the body class to individual page styles
   useInsertionEffect(() => {
@@ -34,13 +49,6 @@ export default function Home() {
   })
       
   const navigate = useNavigate();
-      
-  const [notReady, setNotReady] = useState(true), //send button status
-        [userId, setUserId]     = useState(), //stores userid
-        [batchNo, setBatchNo]   = useState(), //stores batchno
-        [density, setDensity]   = useState(), //stores density
-        [packLine, setPackLine] = useState(), //stores packaging line
-        [volume, setVolume]     = useState(); //stores volum
 
   const fields = [
     userId,
@@ -53,7 +61,7 @@ export default function Home() {
   const checkFields = () => { //checks if all the fields are valid so the user can submit
     if (ws.readyState != 1) return alert("Conexão não estabelecida =( reinicie a aplicação!");
 
-    const invalid = ['', undefined, NaN];
+    const invalid = ["", undefined, NaN];
 
     if (invalid.some(e => fields.includes(e))) return setNotReady(true);
 
@@ -65,8 +73,8 @@ export default function Home() {
 
     setUserData({
       userId: parseFloat(userId),
-      batchNo,
-      density,
+      batchNo: parseFloat(batchNo),
+      density: parseFloat(density),
       packLine,
       volume: (volume === "1L (Gran BOH e Bud)" ? 990 :
                volume === "1L" ? 1000 :
@@ -86,7 +94,7 @@ export default function Home() {
             onChange={(e) => {
               const val = e.currentTarget.value;
 
-              if (isNaN(val)) return alert("Apenas números!"), e.currentTarget.value = '';
+              if (isNaN(val)) return alert("Apenas números!"), setUserId("");
 
               if (val.length > 8) return e.currentTarget.value = val.slice(0,8);
 
@@ -96,6 +104,7 @@ export default function Home() {
             name="user-id" 
             id="user-id"
             placeholder="Digite seu ID"
+            value={userId}
             required/>
           </label>
           
@@ -105,14 +114,15 @@ export default function Home() {
             onChange={(e) => {
               const val = e.currentTarget.value;
 
-              if (isNaN(val)) return alert("Apenas números!"), e.currentTarget.value = '';
+              if (isNaN(val)) return alert("Apenas números!"), setBatchNo("");
 
-              setBatchNo(parseInt(val));
+              setBatchNo(val);
             }}
             className="home-inputs"
             name="batch-no"
             id="batch-no"
             placeholder="Digite o número do lote"
+            value={batchNo}
             required/>
           </label>
     
@@ -122,14 +132,15 @@ export default function Home() {
             onChange={(e) => {
               const val = e.currentTarget.value;
 
-              if (isNaN(val)) return alert("Apenas números!"), e.currentTarget.value = '';
+              if (isNaN(val)) return alert("Apenas números!"), setDensity("");
 
-              setDensity(parseFloat(val));
+              setDensity(val);
             }}
             className="home-inputs"
             name="density"
             id="density"
             placeholder="Digite a densidade utilizada"
+            value={density}
             required/>
           </label>
 
@@ -139,7 +150,7 @@ export default function Home() {
             setPackLine(parseInt(e.currentTarget.value));
           }}
           id="pack-line"
-          defaultValue=""
+          value={packLine}
           required>
           
           <option
@@ -161,7 +172,7 @@ export default function Home() {
             setVolume(e.currentTarget.value);
           }}
           id="volume"
-          defaultValue=""
+          value={volume}
           required>
           
           <option

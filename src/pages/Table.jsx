@@ -1,13 +1,13 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-import React, { useContext, useEffect, useInsertionEffect, useState } from "react"
-import { Link, useNavigate } from "react-router-dom";
 import "./Table.css";
+import React, { useContext, useInsertionEffect } from "react"
 import { AppContext } from "../App";
+import { TableContext } from "../contexts/TableContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Table() {
+  const { userData, ws } = useContext(AppContext);
+
   const {
-    userData,
     weights,
     setWeights,
     rows,
@@ -18,8 +18,7 @@ export default function Table() {
     setNotReady,
     buttonText,
     setButtonText,
-    ws
-  } = useContext(AppContext);
+  } = useContext(TableContext);
 
   //change the body class to individual page styles
   useInsertionEffect(() => {
@@ -27,6 +26,7 @@ export default function Table() {
     document.body.classList.add("table-page");
     
     return () => {
+      setButtonText("Enviar ao MES");
       document.body.classList.remove("table-page");
     };
   }, []);
