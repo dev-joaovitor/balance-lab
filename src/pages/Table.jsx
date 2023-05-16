@@ -23,6 +23,7 @@ export default function Table() {
   //change the body class to individual page styles
   useInsertionEffect(() => {
     console.clear();
+    console.log(userData);
     document.body.classList.add("table-page");
     
     return () => {

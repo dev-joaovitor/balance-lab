@@ -7,7 +7,13 @@ import { AppContext } from "../App";
 import { HomeContext } from "../contexts/HomeContext";
 
 
-const lines = [502, 503, 511, 512, 541];
+const lines = [
+  "ENCH 1 - 502",
+  "ENCH 1 - 503", "ENCH 2 - 503",
+  "ENCH 1 - 511",
+  "ENCH 1 - 512", "ENCH 2 - 512",
+  "ENCH 1 - 541", "ENCH 2 - 541",
+];
 
 const volumes = [
   "207ml", "237ml", "250ml", "269ml", "275ml",
@@ -46,7 +52,7 @@ export default function Home() {
       
   useEffect(() => {
     checkFields();
-  })
+  });
       
   const navigate = useNavigate();
 
@@ -60,9 +66,9 @@ export default function Home() {
 
   const checkFields = () => { //checks if all the fields are valid so the user can submit
     if (ws.readyState != 1) return alert("Conexão não estabelecida =( reinicie a aplicação!");
-
+    
     const invalid = ["", undefined, NaN];
-
+    
     if (invalid.some(e => fields.includes(e))) return setNotReady(true);
 
     return setNotReady(false);
@@ -147,7 +153,7 @@ export default function Home() {
           <select
           className="home-selects"
           onChange={(e) => {
-            setPackLine(parseInt(e.currentTarget.value));
+            setPackLine(e.currentTarget.value);
           }}
           id="pack-line"
           value={packLine}

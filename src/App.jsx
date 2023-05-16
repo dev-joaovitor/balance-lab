@@ -15,6 +15,10 @@ export const AppContext = createContext({
 
 export default function App() {
   const [userData, setUserData] = useState({});
+  const [connected, setConnected] = useState(false);
+
+  ws.onopen = () => setConnected(true);
+  ws.onclose = () => setConnected(false);
 
   const exportData = {
     setUserData,
@@ -25,7 +29,7 @@ export default function App() {
   return (
     <>
       <header>
-        <p>Coleta de Dados — Balança Lab. 🧪</p>
+        <p>Coleta de Dados — Balança Lab. 🧪 {connected ? "Conectado" : "Desconectado"}</p>
       </header>
       <AppContext.Provider value={exportData}>
         <TableContextProvider>
