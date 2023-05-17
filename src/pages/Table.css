@@ -98,7 +98,6 @@ table tr:nth-child(n+7):not(:nth-child(21)) td:nth-child(2n+3) {
 .send-btn-container {
   display: flex;
   justify-content: center;
-  margin-top: 4%;
 }
 
 .send-btn {

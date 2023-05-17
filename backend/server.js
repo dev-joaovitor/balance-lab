@@ -9,7 +9,7 @@ const child = spawn("cat", ["/dev/ttyUSB0"]);
 
 
 const msg = {//payload
-  payload: {},
+  payload: { passo: 100 },
 };
 
 const pontoProdutivoObj = {//productive point map
@@ -21,17 +21,6 @@ const pontoProdutivoObj = {//productive point map
   "ENCH 2 - 512": 10659,
   "ENCH 1 - 541": 17987,
   "ENCH 2 - 541": 32539,
-};
-
-const idLinha = {//soda id map
-  "ENCH 1 - 502": 12049,
-  "ENCH 1 - 503": 11882,
-  "ENCH 2 - 503": 11882,
-  "ENCH 1 - 511": 11884,
-  "ENCH 1 - 512": 11885,
-  "ENCH 2 - 512": 11885,
-  "ENCH 1 - 541": 11883,
-  "ENCH 2 - 541": 11883,
 };
 
 const toleranciaObj = {//map tolerance
@@ -60,6 +49,7 @@ const toleranciaObj = {//map tolerance
   1100: 16.5,
 };
 
+
 client.on("connect", () => console.log("mqtt connected"));
 
 wss.on("connection", (stream) => {
@@ -78,7 +68,7 @@ wss.on("connection", (stream) => {
   //mock sender 200ms
   const balanceMock = setInterval(() => {
     stream.send(getRandomFloat(60, 350, 2));
-  }, 200);
+  }, 100);
 
   stream.on("message", (message) => {
     message = message.toString();
@@ -95,20 +85,27 @@ wss.on("connection", (stream) => {
       msg.payload.idUsuario = message.userData.userId;
       msg.payload.numeroLote = message.userData.batchNo;
       msg.payload.densidadeAgua = message.userData.density;
-      msg.payload.linhaPackaging = message.userData.packLine;
-      msg.payload.packagingPontoProdutivo = pontoProdutivoObj[msg.payload.linhaPackaging];
+      msg.payload.packagingEquipamento = pontoProdutivoObj[message.userData.packLine];
       msg.payload.volumeNominal = message.userData.volume;
       msg.payload.toleranciaIndividual = toleranciaObj[msg.payload.volumeNominal];
     }
-
+    
     console.log(msg.payload);
-    sendMqtt("/soda/laboratorio/" + idLinha[msg.payload.linhaPackaging]);
+    sendMqtt("/soda/laboratorio/11882");
   })
   stream.on("close", () => console.log("closed"));
 })
 
 //send to mqtt
 function sendMqtt(topic) {
+  //TODO: republish step 10
+  // console.log(msg.payload);
+  // msg.payload = { passo: 10 }
+
+  // setTimeout(() => {
+  //   console.log(msg.payload);
+  // }, 20000);
+
   client.publish(
     topic,
     JSON.stringify(msg.payload),
