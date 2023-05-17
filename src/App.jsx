@@ -38,7 +38,7 @@ export default function App() {
           </HomeContextProvider>
         </TableContextProvider>
       </AppContext.Provider>
-      <p id="cop"> © 2023, joaotorvitor. All rights reserved.</p>
+      <p id="cop"> © 2023, joaotorvitor. All rights reserved. =D</p>
     </>
   )
 }

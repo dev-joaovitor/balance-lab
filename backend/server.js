@@ -12,7 +12,7 @@ const msg = {//payload
   payload: {},
 };
 
-const pontoProdutivoObj = {//mapeia ponto produtivo
+const pontoProdutivoObj = {//productive point map
   "ENCH 1 - 502": 2253,
   "ENCH 1 - 503": 2964,
   "ENCH 2 - 503": 3137,
@@ -23,7 +23,7 @@ const pontoProdutivoObj = {//mapeia ponto produtivo
   "ENCH 2 - 541": 32539,
 };
 
-const idLinha = {//mapeia id soda
+const idLinha = {//soda id map
   "ENCH 1 - 502": 12049,
   "ENCH 1 - 503": 11882,
   "ENCH 2 - 503": 11882,
@@ -34,7 +34,7 @@ const idLinha = {//mapeia id soda
   "ENCH 2 - 541": 11883,
 };
 
-const toleranciaObj = {//mapeia tolerancia
+const toleranciaObj = {//map tolerance
   207: 10.35,
   237: 11.85,
   250: 9,
@@ -60,19 +60,18 @@ const toleranciaObj = {//mapeia tolerancia
   1100: 16.5,
 };
 
-
 client.on("connect", () => console.log("mqtt connected"));
 
 wss.on("connection", (stream) => {
   console.log("ws connected");
  
   child.stdout.on("data", (data) => {//send the weights to the table
-    data = data.toString("utf8");//decode
+    data = data.toString("utf8");//buffer to string
     data = parseFloat(data.replace(/\((\d)\)/g, "$1"));//format only numbers
     stream.send(data);
   })
 
-  child.on("exit", function(code) {//child_process err
+  child.on("exit", (code) => {//child_process err
     console.log(code);
   })
 
@@ -113,8 +112,7 @@ function sendMqtt(topic) {
   client.publish(
     topic,
     JSON.stringify(msg.payload),
-    () => console.log("Dados enviados!")
-    );
+    () => console.log("Dados enviados!"));
 }
 
 //mock weights

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 const tableInit = [""];
 for (let i = 1; i <= 20; i++) {

@@ -71,6 +71,10 @@ td {
   height: 1.5vw;
 }
 
+table tr:nth-child(n+7):not(:nth-child(21)) td:nth-child(2n+3) {
+  color: rgb(151, 151, 151);
+}
+
 #cop {
   color: rgb(255, 255, 255, 0.7);
   text-align: center;
@@ -118,7 +122,6 @@ td {
 
 #observation {
   color: white;
-  font-size: 80%;
   text-decoration: underline;
   text-align: center;
 }
@@ -131,7 +134,7 @@ td {
 @media only screen and (orientation: portrait) {
   td, th {
     padding: 2px;
-    font-size: 1rem;
+    font-size: 13pt;
   }
 }
 
