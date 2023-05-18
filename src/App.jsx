@@ -29,7 +29,9 @@ export default function App() {
   return (
     <>
       <header>
-        <p>Coleta de Dados — Balança Lab. 🧪 {connected ? "Conectado" : "Desconectado"}</p>
+        <p>
+          <img id="lab-scale-img" src="/lab-scale-by-vectorsmarket15.png" alt="laboratory-scale-weight"/>
+          Coleta de Dados — Balança Lab.</p>
       </header>
       <AppContext.Provider value={exportData}>
         <TableContextProvider>
@@ -38,7 +40,11 @@ export default function App() {
           </HomeContextProvider>
         </TableContextProvider>
       </AppContext.Provider>
-      <p id="cop"> © 2023, joaotorvitor. All rights reserved. =D</p>
+      <div className="connection-container">
+        <p id="connection">Conexão:</p>
+        <div id={connected ? "on" : "off"}></div>
+      </div>
+      <p id="copyright"> © 2023, joaotorvitor. All rights reserved. =D</p>
     </>
   )
 }

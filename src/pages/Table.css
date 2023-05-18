@@ -75,10 +75,38 @@ table tr:nth-child(n+7):not(:nth-child(21)) td:nth-child(2n+3) {
   color: rgb(151, 151, 151);
 }
 
-#cop {
+#copyright {
   color: rgb(255, 255, 255, 0.7);
   text-align: center;
-  transform: translateY(5px);
+}
+
+.connection-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  height: 5px;
+}
+
+.connection-container div {
+  display: inline;
+  margin-left: 8px;
+  width: 15px;
+  height: 15px;
+}
+
+#connection {
+  display: inline;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+#on {
+  background-color: rgb(6, 207, 133);
+  border-radius: 15px;
+}
+
+#off {
+  background-color: rgb(220, 55, 55);
 }
 
 .back-btn {
@@ -123,6 +151,12 @@ table tr:nth-child(n+7):not(:nth-child(21)) td:nth-child(2n+3) {
   color: white;
   text-decoration: underline;
   text-align: center;
+}
+
+#lab-scale-img {
+  padding-right: 10px;
+  width: 10%;
+  vertical-align: middle;
 }
 
 .current-row .current-column {
