@@ -22,7 +22,7 @@ const pontoProdutivoObj = {//productive point map
   "ENCH 1 - 502": 2253,
   "ENCH 1 - 503": 2964,
   "ENCH 2 - 503": 3137,
-  "ENCH 1 - 511": 27601,
+  "ENCH 1 - 511": 29601,
   "ENCH 1 - 512": 10701,
   "ENCH 2 - 512": 10659,
   "ENCH 1 - 541": 17987,
@@ -104,7 +104,7 @@ function sendMqtt(topic) {
   setTimeout(() => {
     client.publish(
       topic,
-      JSON.stringify({ passo: 10 }),
+      JSON.stringify(msg.payload),
       () => console.log("Condição Resetada!"));
   }, 60000);
 
