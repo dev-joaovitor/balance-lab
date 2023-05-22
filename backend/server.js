@@ -4,8 +4,14 @@ const wss = new ws.Server({ port: 6969 });
 const mqtt = require('mqtt');
 const client = mqtt.connect("http://sodamqtt:1883");
 
-const { spawn } = require("child_process");
-const child = spawn("cat", ["/dev/ttyUSB0"]);
+const { SerialPort } = require("serialport");
+const port = new SerialPort({
+  path: "/dev/ttyUSB0",
+  baudRate: 9600,
+  dataBits: 7,
+  parity: "none",
+  stopBits: 1,
+})
 
 
 const msg = {//payload
@@ -55,14 +61,11 @@ client.on("connect", () => console.log("mqtt connected"));
 wss.on("connection", (stream) => {
   console.log("ws connected");
  
-  child.stdout.on("data", (data) => {//send the weights to the table
+  //listen and send weights to table
+  port.on("data", (data) => {
     data = data.toString("utf8");//buffer to string
-    data = parseFloat(data.replace(/\((\d)\)/g, "$1"));//format only numbers
+    data = parseFloat(data.replace(/\((\d)\)/g, "$1"));//numbers only
     stream.send(data);
-  })
-
-  child.on("exit", (code) => {//child_process err
-    console.log(code);
   })
 
   //mock sender 200ms
@@ -98,13 +101,12 @@ wss.on("connection", (stream) => {
 
 //send to mqtt
 function sendMqtt(topic) {
-  //TODO: republish step 10
-  // console.log(msg.payload);
-  // msg.payload = { passo: 10 }
-
-  // setTimeout(() => {
-  //   console.log(msg.payload);
-  // }, 20000);
+  setTimeout(() => {
+    client.publish(
+      topic,
+      JSON.stringify({ passo: 10 }),
+      () => console.log("Condição Resetada!"));
+  }, 60000);
 
   client.publish(
     topic,
