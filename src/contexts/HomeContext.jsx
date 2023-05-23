@@ -14,7 +14,7 @@ export default function HomeContextProvider({ children }) {
     const [notReady, setNotReady] = useState(true), //send button status
           [userId, setUserId]     = useState(""), //stores userid
           [batchNo, setBatchNo]   = useState(""), //stores batchno
-          [density, setDensity]   = useState(""), //stores density
+          [density, setDensity]   = useState(0.998), //stores density
           [packLine, setPackLine] = useState(""), //stores packaging line
           [volume, setVolume]     = useState(""); //stores volum
 
