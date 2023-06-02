@@ -5,13 +5,13 @@ const mqtt = require('mqtt');
 const client = mqtt.connect("http://sodamqtt:1883");
 
 const { SerialPort } = require("serialport");
-const port = new SerialPort({
-  path: "/dev/ttyUSB0",
-  baudRate: 9600,
-  dataBits: 7,
-  parity: "none",
-  stopBits: 1,
-})
+// const port = new SerialPort({
+//   path: "/dev/ttyUSB0",
+//   baudRate: 9600,
+//   dataBits: 7,
+//   parity: "none",
+//   stopBits: 1,
+// })
 
 
 const msg = {//payload
@@ -44,6 +44,7 @@ const toleranciaObj = {//map tolerance
   350: 10.5,
   355: 10.65,
   385: 11.55,
+  410: 12.3,
   473: 14.19,
   500: 15,
   550: 15,
@@ -62,11 +63,11 @@ wss.on("connection", (stream) => {
   console.log("ws connected");
  
   //listen and send weights to table
-  port.on("data", (data) => {
-    data = data.toString("utf8");//buffer to string
-    data = parseFloat(data.replace(/\((\d)\)/g, "$1"));//numbers only
-    stream.send(data);
-  })
+  // port.on("data", (data) => {
+  //   data = data.toString("utf8");//buffer to string
+  //   data = parseFloat(data.replace(/\((\d)\)/g, "$1"));//numbers only
+  //   stream.send(data);
+  // })
 
   //mock sender 200ms
   const balanceMock = setInterval(() => {

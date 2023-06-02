@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../App";
 import { HomeContext } from "../../contexts/HomeContext";
+import { TableContext } from "../../contexts/TableContext";
 
 export function IdInput() {
     const { userId, setUserId } = useContext(HomeContext);
@@ -119,9 +120,9 @@ export function VolumeSelect() {
     const volumes = [
         "207ml", "237ml", "250ml", "269ml", "275ml",
         "300ml", "310ml", "313ml", "315ml", "330ml",
-        "343ml", "350ml", "355ml", "385ml", "473ml",
-        "500ml", "550ml", "600ml", "630ml", "650ml",
-        "1L", "1.1L", "1L (Gran BOH e Bud)"
+        "343ml", "350ml", "355ml", "385ml", "410ml",
+        "473ml", "500ml", "550ml", "600ml", "630ml",
+        "650ml", "1L", "1.1L", "1L (Gran BOH e Bud)"
       ];
 
     return (
@@ -151,6 +152,7 @@ export function VolumeSelect() {
 
 export function SaveData() {
     const { setUserData } = useContext(AppContext);
+    const { setNotReady } = useContext(TableContext);
     const {
         notReady,
         userId,
@@ -174,6 +176,9 @@ export function SaveData() {
                    volume === "1L" ? 1000 :
                    volume === "1.1L" ? 1100 : parseFloat(volume)),
         });
+        
+        setNotReady(false);
+
         return navigate("/table");
       }
 

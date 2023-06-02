@@ -14,6 +14,8 @@ export default function TableBody() {
         setNotReady,
     } = useContext(TableContext);
 
+    if (current.Completed.length !== 4) setNotReady(true);
+
     const addWeight = (weight) => {
         weight = parseFloat(weight);
     
