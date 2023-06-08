@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 import { Outlet } from 'react-router-dom'
-import Home from './pages/Home';
-import Table from './pages/Table';
 import TableContextProvider from './contexts/TableContext';
 import HomeContextProvider from './contexts/HomeContext';
 

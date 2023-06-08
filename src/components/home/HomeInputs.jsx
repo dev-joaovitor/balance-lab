@@ -4,6 +4,34 @@ import { AppContext } from "../../App";
 import { HomeContext } from "../../contexts/HomeContext";
 import { TableContext } from "../../contexts/TableContext";
 
+//indiv. tolerance
+const toleranceObj = {
+  207: 10.35,
+  237: 11.85,
+  250: 9,
+  269: 9,
+  275: 9,
+  300: 9,
+  310: 9.3,
+  313: 9,
+  315: 9,
+  330: 9.9,
+  343: 10.29,
+  350: 10.5,
+  355: 10.65,
+  385: 11.55,
+  410: 12.3,
+  473: 14.19,
+  500: 15,
+  550: 15,
+  600: 15,
+  630: 15,
+  650: 19.5,
+  990: 5,
+  1000: 15,
+  1100: 16.5,
+};
+
 export function IdInput() {
     const { userId, setUserId } = useContext(HomeContext);
 
@@ -59,7 +87,7 @@ export function DensityInput() {
 
     return (
         <label htmlFor="density" className="home-labels">
-            Densidade da Água*
+            Densidade da Água *
             <input
             onChange={(e) => {
               const val = e.currentTarget.value;
@@ -166,17 +194,20 @@ export function SaveData() {
 
       const saveForm = () => { //saves the data and redirect to table page
         if (userId.length != 8) return alert("O ID deve conter 8 dígitos");
-    
+        
+        const vol = (volume === "1L (Gran BOH e Bud)" ? 990 :
+        volume === "1L" ? 1000 :
+        volume === "1.1L" ? 1100 : parseFloat(volume));
+
         setUserData({
           userId: parseFloat(userId),
           batchNo: parseFloat(batchNo),
           density: parseFloat(density),
           packLine,
-          volume: (volume === "1L (Gran BOH e Bud)" ? 990 :
-                   volume === "1L" ? 1000 :
-                   volume === "1.1L" ? 1100 : parseFloat(volume)),
+          volume: vol,
+          tolerance: toleranceObj[vol],
         });
-        
+
         setNotReady(false);
 
         return navigate("/table");

@@ -41,8 +41,10 @@ export default function Home() {
   ];
 
   const checkFields = () => { //checks if all the fields are valid so the user can submit
-    if (ws.readyState != 1) return alert("Conexão não estabelecida =( reinicie a aplicação!");
-    
+    setTimeout(() => {
+      if (ws.readyState != 1) return alert("Conexão não estabelecida =(\n Reinicie a página!");
+    }, 2000);
+
     const invalid = ["", undefined, NaN];
     
     if (invalid.some(e => fields.includes(e))) return setNotReady(true);
