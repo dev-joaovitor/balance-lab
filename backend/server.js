@@ -18,7 +18,7 @@ const msg = {//payload
   payload: { passo: 100 },
 };
 
-const pontoProdutivoObj = {//productive point map
+const productivePointObj = {//productive point map
   "ENCH 1 - 502": 2253,
   "ENCH 1 - 503": 2964,
   "ENCH 2 - 503": 3137,
@@ -29,7 +29,7 @@ const pontoProdutivoObj = {//productive point map
   "ENCH 2 - 541": 32539,
 };
 
-const toleranciaObj = {//map tolerance
+const toleranceObj = {//tolerance map
   207: 10.35,
   237: 11.85,
   250: 9,
@@ -71,7 +71,7 @@ wss.on("connection", (stream) => {
 
   //mock sender 200ms
   const balanceMock = setInterval(() => {
-    stream.send(getRandomFloat(60, 350, 2));
+    stream.send(getRandomFloat(300, 600, 2));
   }, 100);
 
   stream.on("message", (message) => {
@@ -86,12 +86,12 @@ wss.on("connection", (stream) => {
     }
 
     if (message.userData) { //handle userdata
-      msg.payload.idUsuario = message.userData.userId;
-      msg.payload.numeroLote = message.userData.batchNo;
-      msg.payload.densidadeAgua = message.userData.density;
-      msg.payload.packagingEquipamento = pontoProdutivoObj[message.userData.packLine];
-      msg.payload.volumeNominal = message.userData.volume;
-      msg.payload.toleranciaIndividual = toleranciaObj[msg.payload.volumeNominal];
+      msg.payload.idUsuario            = message.userData.userId;
+      msg.payload.numeroLote           = message.userData.batchNo;
+      msg.payload.densidadeAgua        = message.userData.density;
+      msg.payload.packagingEquipamento = productivePointObj[message.userData.packLine];
+      msg.payload.volumeNominal        = message.userData.volume;
+      msg.payload.toleranciaIndividual = message.userData.tolerance;
     }
     
     console.log(msg.payload);
@@ -102,17 +102,19 @@ wss.on("connection", (stream) => {
 
 //send to mqtt
 function sendMqtt(topic) {
+  console.log("Resetando passo...");
+  client.publish(
+    topic,
+    JSON.stringify({ passo: 10 }),
+    () => console.log("Condição resetada!"));
+
   setTimeout(() => {
+    console.log("Enviando novos dados...");
     client.publish(
       topic,
       JSON.stringify(msg.payload),
-      () => console.log("Condição Resetada!"));
-  }, 60000);
-
-  client.publish(
-    topic,
-    JSON.stringify(msg.payload),
-    () => console.log("Dados enviados!"));
+      () => console.log("Dados enviados!"));
+  }, 8000);
 }
 
 //mock weights
