@@ -20,7 +20,7 @@ export default function Home() {
   
   //change the body class to individual page styles
   useInsertionEffect(() => {
-        console.clear();
+        // console.clear();
         document.body.classList.add("home-page");
         
         return () => {
