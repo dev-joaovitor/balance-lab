@@ -39,6 +39,22 @@ header p {
   margin-bottom: 20px;
 }
 
+.conformity th {
+  cursor: auto !important;
+  background-color: rgb(235, 235, 235);
+  color: rgb(30, 30, 30);
+}
+
+#OK {
+  background-color: rgb(74, 255, 68);
+  color: rgb(30, 30, 30)
+}
+
+#NOK {
+  background-color: rgb(236, 81, 81);
+  color: #ffff;
+}
+
 table {
   border-collapse: collapse;
   box-shadow: -1.2vw 1.2vw rgba(0, 0, 0, 0.3);
