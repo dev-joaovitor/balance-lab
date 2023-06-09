@@ -12,10 +12,6 @@ for (let i = 1; i <= 20; i++) {
   });
 }
 
-tableInit.push({
-  "title": "MÉDIA"
-});
-
 export const TableContext = createContext({
     userData: null,
     weights: {p1: [], p2: [], p3: [], p4: []},

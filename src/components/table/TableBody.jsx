@@ -1,9 +1,9 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../../App";
 import { TableContext } from "../../contexts/TableContext";
 
 export default function TableBody() {
-    const { ws } = useContext(AppContext);
+    const { userData, ws } = useContext(AppContext);
     const {
         weights,
         setWeights,
@@ -11,10 +11,13 @@ export default function TableBody() {
         setRows,
         current,
         setCurrent,
+        notReady,
         setNotReady,
     } = useContext(TableContext);
 
-    if (current.Completed.length !== 4) setNotReady(true);
+    useEffect(() => {
+      if (current.Completed.length !== 4 && !notReady) setNotReady(true);
+    })
 
     const addWeight = (weight) => {
         weight = parseFloat(weight);
@@ -45,11 +48,6 @@ export default function TableBody() {
         //store the table values
         setRows([...rows]);
     
-        //average logic
-        rows[21][`weight${current.Column}`] = (weights[`p${current.Column}`]
-                                              .reduce((acc, cur) => acc + cur, 0)/current.Row)
-                                              .toFixed(2);
-    
         //water columns are limited by 6 rows
         if (!(current.Column % 2) && current.Row === 6) {
           rows.map((row, idx) => {
@@ -65,8 +63,9 @@ export default function TableBody() {
           current.Row = 1;
           current.Column++;
           setCurrent(current);
-          
+
           if (current.Completed.length === 4) return setNotReady(false);
+          
           return;
         }
     
@@ -82,20 +81,21 @@ export default function TableBody() {
         addWeight(msg.data);
       };
 
-
     return (
-        <tbody>
-        {
-          rows.slice(1).map((row, idx) => (
-            <tr key={idx} className={current.Row === row.title ? "current-row" : ""}>
-              <td>{row.title}</td>
-              <td className={current.Column === 1 ? "current-column" : ""}>{row.weight1}</td>
-              <td className={current.Column === 2 ? "current-column" : ""}>{row.weight2}</td>
-              <td className={current.Column === 3 ? "current-column" : ""}>{row.weight3}</td>
-              <td className={current.Column === 4 ? "current-column" : ""}>{row.weight4}</td>
-            </tr>
-          ))
-        }
-      </tbody>
+        <>
+          <tbody>
+          {
+            rows.slice(1).map((row, idx) => (
+              <tr key={idx} className={current.Row === row.title ? "current-row" : ""}>
+                <td>{row.title}</td>
+                <td className={current.Column === 1 ? "current-column" : ""}>{row.weight1}</td>
+                <td className={current.Column === 2 ? "current-column" : ""}>{row.weight2}</td>
+                <td className={current.Column === 3 ? "current-column" : ""}>{row.weight3}</td>
+                <td className={current.Column === 4 ? "current-column" : ""}>{row.weight4}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </>
     )
 }

@@ -35,6 +35,10 @@ header p {
   margin-top: 15px;
 }
 
+.conformity {
+  margin-bottom: 20px;
+}
+
 table {
   border-collapse: collapse;
   box-shadow: -1.2vw 1.2vw rgba(0, 0, 0, 0.3);
@@ -78,6 +82,10 @@ table tr:nth-child(n+7):not(:nth-child(21)) td:nth-child(2n+3) {
 #copyright {
   color: rgb(255, 255, 255, 0.7);
   text-align: center;
+}
+
+#white {
+  background-color: #ffff;
 }
 
 .connection-container {
@@ -151,6 +159,20 @@ table tr:nth-child(n+7):not(:nth-child(21)) td:nth-child(2n+3) {
   color: white;
   text-decoration: underline;
   text-align: center;
+}
+
+span {
+  padding: 7px;
+  border: 2px solid;
+  background-color: rgb(138, 122, 226);
+  border-radius: 10px;
+}
+
+#loading {
+  padding: 15px;
+  text-align: center;
+  color: #ffff;
+  font-size: 1.15rem;
 }
 
 #lab-scale-img {

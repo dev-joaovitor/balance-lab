@@ -30,13 +30,13 @@ export default function TableHead() {
 
     return (
         <thead>
-        <tr>
-          <th>Nº do Bico</th>
-          <th onClick={() => deleteColumn(1)}>Amostra</th>
-          <th onClick={() => deleteColumn(2)}>Amostra + Água</th>
-          <th onClick={() => deleteColumn(3)}>Embalagem</th>
-          <th onClick={() => deleteColumn(4)}>Embalagem + Água</th>
-        </tr>
-      </thead>
+          <tr>
+            <th>Nº do Bico</th>
+            <th onClick={() => deleteColumn(1)}>Amostra</th>
+            <th onClick={() => deleteColumn(2)}>Amostra + Água</th>
+            <th onClick={() => deleteColumn(3)}>Embalagem</th>
+            <th onClick={() => deleteColumn(4)}>Embalagem + Água</th>
+          </tr>
+        </thead>
     )
 }
