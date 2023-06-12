@@ -15,7 +15,7 @@ export default function Conformity() {
 
         : current.Completed.length === 4 ?
 
-          <div {...console.log(INMETRO)} className="container conformity">
+          <div className="container conformity">
             <table>
               <thead>
                 <tr>
