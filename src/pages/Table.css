@@ -88,7 +88,7 @@ td {
   font-size: 15pt;
   border: 2px solid rgb(92, 92, 92);
   text-align: center;
-  height: 1.5vw;
+  height: 2.5vh;
 }
 
 table tr:nth-child(n+7):not(:nth-child(21)) td:nth-child(2n+3) {

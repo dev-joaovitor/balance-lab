@@ -25,11 +25,12 @@ export default function Table() {
         </table>
       </div>
 
-      <p id="observation">[ Para deletar uma coluna, basta clicar no título dela ]</p>
-      <p id="observation">[ Após enviar os dados, aguarde 1 minuto antes de fazer qualquer coisa ]</p>
+      <p id="observation">[ Clique no título da coluna (em azul) para deletá-la ou no peso que deseja excluir individualmente ]</p>
 
       <Conformity />
 
+      <p id="observation">[ Após enviar os dados, aguarde 1 minuto antes de fazer qualquer coisa ]</p>
+      
       <div className="send-btn-container">
         <TableButtons />
       </div>
